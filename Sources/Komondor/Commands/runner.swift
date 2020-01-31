@@ -32,12 +32,17 @@ public func runner(logger _: Logger, args: [String]) throws {
         commands = arrayOptions
     }
 
+    let silenceOutput = args.contains("--quiet")
+    
     logger.debug("Running commands for komondor \(commands.joined())")
     let stagedFiles = try getStagedFiles()
 
     do {
         try commands.forEach { command in
-            print("[Komondor] > \(hook) \(command)")
+            if !silenceOutput {
+                print("[Komondor] > \(hook) \(command)")
+            }
+            
             let gitParams = Array(args.dropFirst())
             let expandedCommand = expandEdited(forCommand: command, withFiles: stagedFiles)
 
