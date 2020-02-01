@@ -24,6 +24,8 @@ public func runner(logger _: Logger, args: [String]) throws {
         logger.logError("[Komondor] Could not find a key for '\(hook)' under the komondor settings'")
         exit(1)
     }
+    
+    let innerConfig = config["config"] as? [String]
 
     var commands: [String] = []
     if let stringOption = hookOptions as? String {
@@ -32,7 +34,7 @@ public func runner(logger _: Logger, args: [String]) throws {
         commands = arrayOptions
     }
 
-    let silenceOutput = config.keys.contains("--quiet")
+    let silenceOutput = innerConfig?.contains("--quiet") ?? false
     
     logger.debug("Running commands for komondor \(commands.joined())")
     let stagedFiles = try getStagedFiles()
