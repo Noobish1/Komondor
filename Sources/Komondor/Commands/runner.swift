@@ -32,7 +32,7 @@ public func runner(logger _: Logger, args: [String]) throws {
         commands = arrayOptions
     }
 
-    let silenceOutput = args.contains("--quiet")
+    let silenceOutput = config.keys.contains("--quiet")
     
     logger.debug("Running commands for komondor \(commands.joined())")
     let stagedFiles = try getStagedFiles()
